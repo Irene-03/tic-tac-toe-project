@@ -1,14 +1,14 @@
-                                                                         tic-tac-toe
+ #                                                                        tic-tac-toe
                                                                         
 
-tic-tac-toe is a game that very popular and is relatively simple.
-this program  to some extent similarize to the classic version
+# tic-tac-toe is a game that very popular and is relatively simple.
+# this program  to some extent similarize to the classic version
 
-the differences in default setting:
+# the differences in default setting:
 
-.The board is square 4 * 4
-.there are some random locked cell
-.won condition : one of the players can  get three same symbols in a row 
+# .The board is square 4 * 4
+# .there are some random locked cell
+# .won condition : one of the players can  get three same symbols in a row 
 .we have two mode for gaming : 
     1- human with computer 
     2-two human
