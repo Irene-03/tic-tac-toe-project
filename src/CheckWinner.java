@@ -15,6 +15,11 @@ public class CheckWinner {
         this.sideSize = sideSize;
     }
 
+    /**
+     * call the functions to check every possible situation
+      * @param gameInfo an array include amounts of cells like : X,O,block,free
+     * @return return free or X or O mean that any player win or not
+     */
     public String checkWinnerStatus(String[] gameInfo ){
         this.gameInfo = gameInfo;
         String result = "free";
@@ -22,12 +27,17 @@ public class CheckWinner {
             return result;
         }else if(!(result =checkColumn()).equals("free")){
             return result;
-        } else if (!(result =checckMainDiagonal()).equals("free")) {
+        } else if (!(result =checkMainDiagonal()).equals("free")) {
             return result;
         }else if(!(result=checkSubDiagonal()).equals("free")){
             return result;
         }else {return "free";}
     }
+
+    /**
+     * check the row of board to find suitable number of x or o
+     * @return x or o or free as type string
+     */
     public String checkRow() {
         for (int i = 0; i < sideSize; i++) {
             cell = null;
@@ -52,6 +62,10 @@ public class CheckWinner {
         return "free";
     }
 
+    /**
+     *  check the column of board to find suitable number of x or o
+      * @return x or o or free as type string
+     */
     public String checkColumn() {
         for (int i = 0; i < sideSize; i++) {
             cell = null;
@@ -75,7 +89,11 @@ public class CheckWinner {
         return "free";
     }
 
-    public String checckMainDiagonal() {
+    /**
+     * check the main diagonal of board to find suitable number of x or o
+      * @return x or o or free as type string
+     */
+    public String checkMainDiagonal() {
         for (int i = 2-sideSize; i <= sideSize-2; i++) {
             cell = null;
             sum =0;
@@ -99,6 +117,11 @@ public class CheckWinner {
         }
         return "free";
     }
+
+    /**
+     * check the sub diagonal of board to find suitable number of x or o
+      * @return x or o or free as type string
+     */
     public String checkSubDiagonal() {
 
 
