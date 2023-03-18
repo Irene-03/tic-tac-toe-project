@@ -8,10 +8,13 @@ public class LoginData {
     Scanner scanner = new Scanner(System.in);
     private final String cls = "\033[H\033[2J";
     private int indexUser = 0;
-    private ArrayList<String> gamersInfo = new ArrayList<>();
-    private Menu menuObject = new Menu();
+    private final ArrayList<String> gamersInfo = new ArrayList<>();
+    private final Menu menuObject = new Menu();
 
 
+    /**
+     * check src folder to finde login data file and if doesn't have make a new one
+     */
     public static void checkExistFile() {
 
         File file;
@@ -34,14 +37,19 @@ public class LoginData {
 
     }
 
+    /**
+     * this is menu that appear  before main menu  to set up user account
+     * @throws IOException
+     */
     public void startMenu() throws IOException {
         while (true) {
             System.out.println(cls);
             System.out.println("1-log in");
             System.out.println("2-sign up");
             System.out.println("3-log out");
-            System.out.println("4-show the my information table");
+            System.out.println("4-show my information table");
             System.out.println("5-exist");
+
             int startInput;
             startInput = scanner.nextInt();
             if (startInput == 1) {
@@ -66,6 +74,10 @@ public class LoginData {
         }
     }
 
+    /**
+     * sign up user
+      * @throws IOException
+     */
     public void signUp() throws IOException {
 
         ArrayList<String> gamerInfo = new ArrayList<>();
@@ -80,6 +92,8 @@ public class LoginData {
         System.out.print("\n pleas enter your password: \t");
         pass = scanner.nextLine();
         bufferedWriter.write(user + "\n" + pass + "\n" + "0\n0\n0\n0\n");
+        System.out.println("cls");
+        System.out.println("Your account has been successfully connected.");
 
         String check;
         while ((check = bufferedReader.readLine()) != null) {
@@ -90,6 +104,10 @@ public class LoginData {
 
     }
 
+    /**
+     * log in user and upload data in an arraylist
+     * @throws IOException
+     */
     public void login() throws IOException {
 
         String pass;
@@ -103,6 +121,7 @@ public class LoginData {
         System.out.print("\n pleas enter your password: \t");
         pass = scanner.nextLine();
         if (checkExist(user, pass) == true) {
+            System.out.println("Your account has been successfully connected.");
             String check;
             while ((check = bufferedReader.readLine()) != null) {
                 gamersInfo.add(check);
@@ -115,6 +134,13 @@ public class LoginData {
 
     }
 
+    /**
+     * check that exist an account whit input username and password and save the index of local arraylist including that name
+      * @param user input username from player
+     * @param pass input password from player
+     * @return true or false mean exist an account or not
+     * @throws IOException
+     */
     public boolean checkExist(String user, String pass) throws IOException {
         ArrayList<String> gamerInfo = new ArrayList<>();
         File file = new File("src/loginData.txt");
@@ -141,6 +167,13 @@ public class LoginData {
     }
 
 
+    /**
+     * change users information after every game and save it
+      * @param user player username
+     * @param pass player password
+     * @param num  number show that which argument ( win , fail , equal) must increase
+     * @throws IOException
+     */
     public static void changeGameInfo(String user, String pass, int num) throws IOException {
         ArrayList<String> gamerInfo = new ArrayList<>();
         File file = new File("src/loginData.txt");
