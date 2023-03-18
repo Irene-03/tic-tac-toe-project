@@ -9,13 +9,44 @@ public class LoginData {
     private final String cls = "\033[H\033[2J";
     private int indexUser = 0;
     private final ArrayList<String> gamersInfo = new ArrayList<>();
-    private final Menu menuObject = new Menu();
+    //    private final Menu menuObject = new Menu();
+    private String playerUserOne;
+    private String playerUserTwo;
+    private String playerPassOne;
+    private String playerPassTwo;
 
 
     /**
-     * check src folder to finde login data file and if doesn't have make a new one
+     * a constructor that call  'heckExistFile'  function
      */
-    public static void checkExistFile() {
+    public LoginData() throws IOException {
+        System.out.println(cls);
+        checkExistFile();
+    }
+
+    public void loginLevel(int menuInput) throws IOException {
+        File file = new File("src/loginData.txt");
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+        if (menuInput == 1) {
+            startMenu(1);
+        } else if (menuInput == 2) {
+            System.out.println("player one :");
+            startMenu(1);
+            System.out.println("cls");
+            System.out.println("player two :");
+            startMenu(2);
+        }
+        String check;
+        while ((check = bufferedReader.readLine()) != null) {
+            gamersInfo.add(check);
+
+        }
+    }
+
+    /**
+     * check src folder to find login data file and if it doesn't have make a new one
+     */
+    private static void checkExistFile() {
 
         File file;
 
@@ -38,24 +69,25 @@ public class LoginData {
     }
 
     /**
-     * this is menu that appear  before main menu  to set up user account
+     * this is menu that appear  after main menu  to set up users account
+     *
      * @throws IOException
      */
-    public void startMenu() throws IOException {
+    private void startMenu(int playerNum) throws IOException {
         while (true) {
-            System.out.println(cls);
+//            System.out.println(cls);
             System.out.println("1-log in");
             System.out.println("2-sign up");
             System.out.println("3-log out");
             System.out.println("4-show my information table");
-            System.out.println("5-exist");
+            System.out.println("5-go ahead");
 
             int startInput;
             startInput = scanner.nextInt();
             if (startInput == 1) {
-                login();
+                login(playerNum);
             } else if (startInput == 2) {
-                signUp();
+                signUp(playerNum);
             } else if (startInput == 3) {
                 //----------------------
             } else if (startInput == 4) {
@@ -71,14 +103,16 @@ public class LoginData {
             } else {
                 System.out.println("Invalid input , enter again!! ");
             }
+            System.out.println(cls);
         }
     }
 
     /**
      * sign up user
-      * @throws IOException
+     *
+     * @throws IOException
      */
-    public void signUp() throws IOException {
+    private void signUp(int playerNum) throws IOException {
 
         ArrayList<String> gamerInfo = new ArrayList<>();
         String pass;
@@ -86,19 +120,31 @@ public class LoginData {
         System.out.println(cls);
         File file = new File("src/loginData.txt");
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-        System.out.print("please enter your username:\t ");
-        user = scanner.nextLine();
-        System.out.print("\n pleas enter your password: \t");
-        pass = scanner.nextLine();
-        bufferedWriter.write(user + "\n" + pass + "\n" + "0\n0\n0\n0\n");
-        System.out.println("cls");
-        System.out.println("Your account has been successfully connected.");
+        Formatter formatter = new Formatter(file);
 
-        String check;
-        while ((check = bufferedReader.readLine()) != null) {
-            gamersInfo.add(check);
 
+        if (playerNum == 1) {
+            System.out.print("please enter your username:\t ");
+            playerUserOne = scanner.nextLine();
+            scanner.next();
+            System.out.print("\npleas enter your password: \t");
+            playerPassOne = scanner.nextLine();
+            scanner.next();
+            formatter.format("%s\n%s\n0\n0\n0\n0\n",playerUserOne,playerPassOne);
+//            bufferedWriter.write(playerUserOne + "\n" + playerPassOne + "\n" + "0\n0\n0\n0\n");
+            System.out.println("cls");
+            System.out.println("Your account has been successfully connected.");
+
+        } else if (playerNum == 2) {
+            System.out.print("please enter your username:\t ");
+            playerUserTwo = scanner.nextLine();
+            scanner.next();
+            System.out.print("\npleas enter your password: \t");
+            playerPassTwo = scanner.nextLine();
+            scanner.next();
+            bufferedWriter.write(playerUserTwo + "\n" + playerPassTwo + "\n" + "0\n0\n0\n0\n");
+            System.out.println(cls);
+            System.out.println("Your account has been successfully connected.");
         }
 
 
@@ -106,9 +152,10 @@ public class LoginData {
 
     /**
      * log in user and upload data in an arraylist
+     *
      * @throws IOException
      */
-    public void login() throws IOException {
+    private void login(int playerNum) throws IOException {
 
         String pass;
         String user;
@@ -116,17 +163,28 @@ public class LoginData {
         File file = new File("src/loginData.txt");
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+
+
         System.out.print("please enter your username:\t ");
         user = scanner.nextLine();
-        System.out.print("\n pleas enter your password: \t");
-        pass = scanner.nextLine();
-        if (checkExist(user, pass) == true) {
-            System.out.println("Your account has been successfully connected.");
-            String check;
-            while ((check = bufferedReader.readLine()) != null) {
-                gamersInfo.add(check);
+        scanner.next();
 
+        System.out.print("\npleas enter your password: \t");
+        pass = scanner.nextLine();
+        scanner.next();
+
+        if (checkExist(user, pass) == true) {
+            if (playerNum == 1) {
+                System.out.println("Your account has been successfully connected.");
+                playerUserOne = user;
+                playerPassOne = pass;
+            } else if (playerNum == 2) {
+                System.out.println("Your account has been successfully connected.");
+                playerUserTwo = user;
+                playerPassTwo = pass;
             }
+
+
         } else {
             System.out.print("\n dont have any account with this user and password!!");
         }
@@ -136,12 +194,13 @@ public class LoginData {
 
     /**
      * check that exist an account whit input username and password and save the index of local arraylist including that name
-      * @param user input username from player
+     *
+     * @param user input username from player
      * @param pass input password from player
      * @return true or false mean exist an account or not
      * @throws IOException
      */
-    public boolean checkExist(String user, String pass) throws IOException {
+    private boolean checkExist(String user, String pass) throws IOException {
         ArrayList<String> gamerInfo = new ArrayList<>();
         File file = new File("src/loginData.txt");
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
@@ -169,12 +228,13 @@ public class LoginData {
 
     /**
      * change users information after every game and save it
-      * @param user player username
-     * @param pass player password
-     * @param num  number show that which argument ( win , fail , equal) must increase
+     *
+     * @param playerNum to show which player information need to change
+     * @param num       number show that which argument ( win , fail , equal) must increase
      * @throws IOException
      */
-    public static void changeGameInfo(String user, String pass, int num) throws IOException {
+    public void changeGameInfo(int playerNum, int num) throws IOException {
+
         ArrayList<String> gamerInfo = new ArrayList<>();
         File file = new File("src/loginData.txt");
         String check;
@@ -190,43 +250,76 @@ public class LoginData {
 
         }
 
-        //check and change the arralist and overwrite in file
+        //check and change the arraylist and overwrite in file
         int counter = 0;
         int size = 0;
         if (gamerInfo.size() != 0) {
 
             while (true) {
+                if (playerNum == 1) {
+                    if ((gamerInfo.get(size)).equals(playerUserOne)) {
+                        counter++;
+                        size++;
+                    }
+                    if ((gamerInfo.get(size)).equals(playerPassOne) && counter == 1) {
+                        counter++;
+                        size++;
 
-                if ((gamerInfo.get(size)).equals(user)) {
-                    counter++;
-                    size++;
-                }
-                if ((gamerInfo.get(size)).equals(pass) && counter == 1) {
-                    counter++;
-                    size++;
-
-                } else {
-                    counter = 0;
-                    size++;
-                }
-                if (counter == 2) {
-                    size += num;
-                    String tempp = gamerInfo.get(size);
-                    int temp = Integer.parseInt(tempp) + 1;
-                    gamerInfo.remove(size);
-                    gamerInfo.add(size, String.valueOf(temp));
-
-
-                    size += (3 - num);
-                    tempp = gamerInfo.get(size);
-                    temp = Integer.parseInt(tempp) + 1;
-                    gamerInfo.remove(size);
-                    gamerInfo.add(size, String.valueOf(temp));
+                    } else {
+                        counter = 0;
+                        size++;
+                    }
+                    if (counter == 2) {
+                        size += num;
+                        String newTemp = gamerInfo.get(size);
+                        int temp = Integer.parseInt(newTemp) + 1;
+                        gamerInfo.remove(size);
+                        gamerInfo.add(size, String.valueOf(temp));
 
 
-                    counter = 0;
+                        size += (3 - num);
+                        newTemp = gamerInfo.get(size);
+                        temp = Integer.parseInt(newTemp) + 1;
+                        gamerInfo.remove(size);
+                        gamerInfo.add(size, String.valueOf(temp));
 
-                    break;
+
+                        counter = 0;
+
+                        break;
+                    }
+                } else if (playerNum == 2) {
+                    if ((gamerInfo.get(size)).equals(playerUserTwo)) {
+                        counter++;
+                        size++;
+                    }
+                    if ((gamerInfo.get(size)).equals(playerPassTwo) && counter == 1) {
+                        counter++;
+                        size++;
+
+                    } else {
+                        counter = 0;
+                        size++;
+                    }
+                    if (counter == 2) {
+                        size += num;
+                        String newTemp = gamerInfo.get(size);
+                        int temp = Integer.parseInt(newTemp) + 1;
+                        gamerInfo.remove(size);
+                        gamerInfo.add(size, String.valueOf(temp));
+
+
+                        size += (3 - num);
+                        newTemp = gamerInfo.get(size);
+                        temp = Integer.parseInt(newTemp) + 1;
+                        gamerInfo.remove(size);
+                        gamerInfo.add(size, String.valueOf(temp));
+
+
+                        counter = 0;
+
+                        break;
+                    }
                 }
 
 
@@ -241,7 +334,6 @@ public class LoginData {
 
         }
     }
-
 
 
 }

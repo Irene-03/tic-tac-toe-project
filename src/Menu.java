@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -15,21 +16,21 @@ public class Menu {
     private final ArrayList<Integer> randomBlock = new ArrayList<>();
     private final int sequencing = 0;
     private final CheckWinner obj =new CheckWinner(selfBoard ,4);
-
+    private  final  LoginData data = new LoginData();
 
 
     /**
      * a constructor that just call teh menu function
      */
-//    public Menu() {
-//        menu();
-//    }
+    public Menu() throws IOException {
+        menu();
+    }
 
 
     /**
      * print menu and get the input of player choice
      */
-    public void menu() {
+    public void menu() throws IOException {
 
         int menuInput = 0;
 
@@ -50,17 +51,19 @@ public class Menu {
         }
     }
 
-    private int checkMenuInput(int menuInput) {
+    private int checkMenuInput(int menuInput) throws IOException {
         switch (menuInput) {
             case 1 -> {
                 //play whit AI
                 System.out.println(cls);
+                data.loginLevel(1);
                 aiPlayer();
                 menuInput = object.playAgain();
             }
             case 2 -> {
                 //two player
                 System.out.println(cls);
+                data.loginLevel(2);
                 twoPlayer();
                 menuInput = object.playAgain();
             }
@@ -84,7 +87,7 @@ public class Menu {
     /**
      * call the function when two player play the game
      */
-    public void twoPlayer() {
+    public void twoPlayer() throws IOException {
 
         //making the arraylist
         for (int i = 0; i < 16; i++) {
@@ -99,7 +102,7 @@ public class Menu {
         startGamingTwoPlayer(gameBoard, selfBoard, randomBlock, sequencing);
     }
 
-    private void startGamingTwoPlayer(String[] gameBoard, String[] selfBoard, ArrayList<Integer> randomBlock, int sequencing) {
+    private void startGamingTwoPlayer(String[] gameBoard, String[] selfBoard, ArrayList<Integer> randomBlock, int sequencing) throws IOException {
         int player;
         String result;
         for (int i = 0; i < 14; i++) {
@@ -114,6 +117,7 @@ public class Menu {
             System.out.println(cls);
             //print the game board
             object.printGameBoard(gameBoard);
+
 
             //input
             boolean testInput;
@@ -140,8 +144,12 @@ public class Menu {
 
             if (sequencing % 2 == 0) {
                 object.changeBoard(gameBoard, selfBoard, player, blueX);
+                data.changeGameInfo(1,1);
+                data.changeGameInfo(2,2);
             } else {
                 object.changeBoard(gameBoard, selfBoard, player, greenO);
+                data.changeGameInfo(2,1);
+                data.changeGameInfo(1,2);
             }
 
             sequencing++;
@@ -179,7 +187,7 @@ public class Menu {
     /**
      * call the function when someone play whit AI
      */
-    public void aiPlayer() {
+    public void aiPlayer() throws IOException {
 
         //making the arraylist
         for (int i = 0; i < 16; i++) {
@@ -194,7 +202,7 @@ public class Menu {
 
     }
 
-    private void startGamingAiPlayer(String[] gameBoard, String[] selfBoard, ArrayList<Integer> randomBlock, int sequencing ) {
+    private void startGamingAiPlayer(String[] gameBoard, String[] selfBoard, ArrayList<Integer> randomBlock, int sequencing ) throws IOException {
         String result;
         int player;
         int ai;
@@ -231,9 +239,11 @@ public class Menu {
                 }
                 //change the game boards
                 object.changeBoard(gameBoard, selfBoard, player, blueX);
+                data.changeGameInfo(1,1);
             } else {
                 ai = object.aiChoice(randomBlock);
                 object.changeBoard(gameBoard, selfBoard, ai, greenO);
+                data.changeGameInfo(1,2);
             }
             sequencing++;
 
