@@ -1,6 +1,4 @@
-import jdk.jshell.spi.SPIResolutionException;
 
-import java.util.Objects;
 
 public class CheckWinner {
     private String cell = null;

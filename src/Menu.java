@@ -14,7 +14,7 @@ public class Menu {
     private final int[] blockArray = new int[3];
     private final ArrayList<Integer> randomBlock = new ArrayList<>();
     private final int sequencing = 0;
-    private final CheckWinner obj = new CheckWinner(selfBoard, 4);
+    private final CheckWinner assessing = new CheckWinner(selfBoard, 4);
 
 
     /**
@@ -35,16 +35,18 @@ public class Menu {
 
         while (menuInput != 3) {
             System.out.print(cls);
-            System.out.printf("  $$\\     $$\\                   $$\\                                 $$\\                         \n" +
-                    "  $$ |    \\__|                  $$ |                                $$ |                        \n" +
-                    "$$$$$$\\   $$\\  $$$$$$$\\       $$$$$$\\    $$$$$$\\   $$$$$$$\\       $$$$$$\\    $$$$$$\\   $$$$$$\\  \n" +
-                    "\\_$$  _|  $$ |$$  _____|      \\_$$  _|   \\____$$\\ $$  _____|      \\_$$  _|  $$  __$$\\ $$  __$$\\ \n" +
-                    "  $$ |    $$ |$$ /              $$ |     $$$$$$$ |$$ /              $$ |    $$ /  $$ |$$$$$$$$ |\n" +
-                    "  $$ |$$\\ $$ |$$ |              $$ |$$\\ $$  __$$ |$$ |              $$ |$$\\ $$ |  $$ |$$   ____|\n" +
-                    "  \\$$$$  |$$ |\\$$$$$$$\\         \\$$$$  |\\$$$$$$$ |\\$$$$$$$\\         \\$$$$  |\\$$$$$$  |\\$$$$$$$\\ \n" +
-                    "   \\____/ \\__| \\_______|         \\____/  \\_______| \\_______|         \\____/  \\______/  \\_______|\n" +
-                    "                                                                                                \n" +
-                    "                                                                                                \n" );
+            System.out.print("""
+                      $$\\     $$\\                   $$\\                                 $$\\                        \s
+                      $$ |    \\__|                  $$ |                                $$ |                       \s
+                    $$$$$$\\   $$\\  $$$$$$$\\       $$$$$$\\    $$$$$$\\   $$$$$$$\\       $$$$$$\\    $$$$$$\\   $$$$$$\\ \s
+                    \\_$$  _|  $$ |$$  _____|      \\_$$  _|   \\____$$\\ $$  _____|      \\_$$  _|  $$  __$$\\ $$  __$$\\\s
+                      $$ |    $$ |$$ /              $$ |     $$$$$$$ |$$ /              $$ |    $$ /  $$ |$$$$$$$$ |
+                      $$ |$$\\ $$ |$$ |              $$ |$$\\ $$  __$$ |$$ |              $$ |$$\\ $$ |  $$ |$$   ____|
+                      \\$$$$  |$$ |\\$$$$$$$\\         \\$$$$  |\\$$$$$$$ |\\$$$$$$$\\         \\$$$$  |\\$$$$$$  |\\$$$$$$$\\\s
+                       \\____/ \\__| \\_______|         \\____/  \\_______| \\_______|         \\____/  \\______/  \\_______|
+                                                                                                                   \s
+                                                                                                                   \s
+                    """);
             printMenu();
             menuInput = scanner.nextInt();
             menuInput = checkMenuInput(menuInput);
@@ -93,7 +95,7 @@ public class Menu {
 
 
     /**
-     * making boards and arraylist for statr the game
+     * making boards and arraylist for start the game
      */
     public void twoPlayer() {
 
@@ -162,7 +164,7 @@ public class Menu {
 
             sequencing++;
 
-            result = obj.checkWinnerStatus(selfBoard);
+            result = assessing.checkWinnerStatus(selfBoard);
 
             if (result.equals(blueX)) {
                 resultPlayer(gameBoard, "player one win !!\n\n");
@@ -270,7 +272,7 @@ public class Menu {
 
 
             //check the winner status
-            result = obj.checkWinnerStatus(selfBoard);
+            result = assessing.checkWinnerStatus(selfBoard);
 
             if (result.equals(blueX)) {
                 resultPlayer(gameBoard, "   you win !!\n\n");
