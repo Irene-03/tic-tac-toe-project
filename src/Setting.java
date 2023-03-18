@@ -3,7 +3,7 @@ import java.util.Formatter;
 
 
 public class Setting {
-    private final String address = "D:\\B - University\\AP - JAVA\\projects\\project-1\\tic-tac-toe project\\src\\new.txt";
+    private final String address = "src/new.txt";
 
 
     /**
