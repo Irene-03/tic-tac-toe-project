@@ -31,6 +31,7 @@ public class Function {
 
     }
 
+
     /**
      * make our boards array to show and check the gamer status
      *
@@ -49,6 +50,7 @@ public class Function {
         }
     }
 
+
     /**
      * change our array to show and to compare
      *
@@ -62,6 +64,8 @@ public class Function {
         selfBoard[player - 1] = symbol;
     }
 
+
+
     /**
      * this function check player input and if its blocked or choose already say input again
      *
@@ -70,7 +74,7 @@ public class Function {
      * @return return if player choice is correct or not as boolean type
      */
     public boolean checkInput(String[] selfBoard, int player, ArrayList<Integer> randomBlock) {
-        if (player > 16 || player < 1) {
+        if (player > 16) {
             System.out.println("\u001B[35m" + "Your selection is incorrect!! choose another" + "\u001B[0m");
             return false;
         } else if (selfBoard[player - 1].equals(redBlock)) {
@@ -84,6 +88,7 @@ public class Function {
             return true;
         }
     }
+
 
     /**
      * this function get a random as AI choice among the remaining values
