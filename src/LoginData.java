@@ -7,7 +7,6 @@ import java.util.Scanner;
 public class LoginData {
     Scanner scanner = new Scanner(System.in);
     private final String cls = "\033[H\033[2J";
-    private int indexUser = 0;
     private final ArrayList<String> gamersInfo = new ArrayList<>();
     //    private final Menu menuObject = new Menu();
     private String playerUserOne;
@@ -19,7 +18,7 @@ public class LoginData {
     /**
      * a constructor that call  'heckExistFile'  function
      */
-    public LoginData() throws IOException {
+    public LoginData() {
         System.out.println(cls);
         checkExistFile();
     }
@@ -71,7 +70,7 @@ public class LoginData {
     /**
      * this is menu that appear  after main menu  to set up users account
      *
-     * @throws IOException
+     * @throws IOException for Buffered class
      */
     private void startMenu(int playerNum) throws IOException {
         while (true) {
@@ -110,13 +109,10 @@ public class LoginData {
     /**
      * sign up user
      *
-     * @throws IOException
+     * @throws IOException buffered class
      */
     private void signUp(int playerNum) throws IOException {
 
-        ArrayList<String> gamerInfo = new ArrayList<>();
-        String pass;
-        String user;
         System.out.println(cls);
         File file = new File("src/loginData.txt");
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
@@ -153,16 +149,13 @@ public class LoginData {
     /**
      * log in user and upload data in an arraylist
      *
-     * @throws IOException
+     * @throws IOException buffered class
      */
     private void login(int playerNum) throws IOException {
 
         String pass;
         String user;
         System.out.println(cls);
-        File file = new File("src/loginData.txt");
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 
 
         System.out.print("please enter your username:\t ");
@@ -173,7 +166,7 @@ public class LoginData {
         pass = scanner.nextLine();
         scanner.next();
 
-        if (checkExist(user, pass) == true) {
+        if (checkExist(user, pass)) {
             if (playerNum == 1) {
                 System.out.println("Your account has been successfully connected.");
                 playerUserOne = user;
@@ -198,7 +191,7 @@ public class LoginData {
      * @param user input username from player
      * @param pass input password from player
      * @return true or false mean exist an account or not
-     * @throws IOException
+     * @throws IOException buffered class
      */
     private boolean checkExist(String user, String pass) throws IOException {
         ArrayList<String> gamerInfo = new ArrayList<>();
@@ -212,11 +205,10 @@ public class LoginData {
             gamerInfo.add(check);
 
         }
-        for (int i = 0; i < gamerInfo.size(); i++) {
-            if (user.equals(gamerInfo.get(i))) {
+        for (String s : gamerInfo) {
+            if (user.equals(s)) {
                 counter++;
-            } else if (pass.equals(gamerInfo.get(i)) && counter == 1) {
-                indexUser = i - 1;
+            } else if (pass.equals(s) && counter == 1) {
                 return true;
             } else {
                 counter = 0;
@@ -231,7 +223,7 @@ public class LoginData {
      *
      * @param playerNum to show which player information need to change
      * @param num       number show that which argument ( win , fail , equal) must increase
-     * @throws IOException
+     * @throws IOException buffered class
      */
     public void changeGameInfo(int playerNum, int num) throws IOException {
 
@@ -239,9 +231,9 @@ public class LoginData {
         File file = new File("src/loginData.txt");
         String check;
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-        FileWriter fileWriter = new FileWriter(file, true);
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
-        StringBuffer inputBuffer = new StringBuffer();
+//        FileWriter fileWriter = new FileWriter(file, true);
+//        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
+//        StringBuffer inputBuffer = new StringBuffer();
 
 
         // copy text in file in arraylist
@@ -284,8 +276,6 @@ public class LoginData {
                         gamerInfo.add(size, String.valueOf(temp));
 
 
-                        counter = 0;
-
                         break;
                     }
                 } else if (playerNum == 2) {
@@ -316,8 +306,6 @@ public class LoginData {
                         gamerInfo.add(size, String.valueOf(temp));
 
 
-                        counter = 0;
-
                         break;
                     }
                 }
@@ -325,8 +313,7 @@ public class LoginData {
 
             }
             Formatter formatter = new Formatter(file);
-            for (int i = 0; i < gamerInfo.size(); i++) {
-                String creat = gamerInfo.get(i);
+            for (String creat : gamerInfo) {
                 formatter.format("%s\n", creat);
             }
             formatter.close();
