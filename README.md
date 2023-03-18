@@ -29,8 +29,8 @@ but the program designed  dinamic in an other branch , that users can make it cu
 
 can chenge this option :
 
-    . side size of board
+       . side size of board
   
-    . number won condition 
+       . number won condition 
   
-    . number of block cells
+       . number of block cells
