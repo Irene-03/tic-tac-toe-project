@@ -7,15 +7,15 @@
 
 
 
-* the differences in default setting:
+the differences in default setting:
 
- .The board is square 4 * 4
+   *The board is square 4 * 4
 
- .there are some random locked cell
+   *there are some random locked cell
 
- .won condition : one of the players can  get three same symbols in a row 
+   *won condition : one of the players can  get three same symbols in a row 
 
- .we have two mode for gaming : 
+   *we have two mode for gaming : 
 
     1- human with computer
     
