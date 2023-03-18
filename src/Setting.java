@@ -23,11 +23,11 @@ public class Setting {
     public void readSetting(int[] info) throws IOException {
 
         File file = new File(address);
-        BufferedReader buf = new BufferedReader(new FileReader(file));
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
         int index = 0;
 
 
-        for (int i = 0; i <3 ; i++) info[index++] = Integer.parseInt(buf.readLine());
+        for (int i = 0; i <3 ; i++) info[index++] = Integer.parseInt(bufferedReader.readLine());
 
     }
 
