@@ -16,6 +16,7 @@ the differences in default setting:
 but the program designed  dinamic in an other branch , that users can make it customizer for their self
 
 can chenge this option :
+
   . side size of board
   . number won condition 
   . number of block cells
