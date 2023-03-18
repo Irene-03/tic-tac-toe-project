@@ -1,14 +1,12 @@
-import jdk.jshell.spi.SPIResolutionException;
 
-import java.util.Objects;
 
 public class CheckWinner {
     private String cell = null;
     private int index;
     private int sum = 0;
     private String[] gameInfo;
-    private int sideSize ;
-    private int wonCndition =3;
+    private final int sideSize ;
+    private final int wonCndition =3;
 
     public CheckWinner(String[] gameInfo, int sideSize ) {
         this.gameInfo = gameInfo;
@@ -22,7 +20,7 @@ public class CheckWinner {
             return result;
         }else if(!(result =checkColumn()).equals("free")){
             return result;
-        } else if (!(result =checckMainDiagonal()).equals("free")) {
+        } else if (!(result =checkMainDiagonal()).equals("free")) {
             return result;
         }else if(!(result=checkSubDiagonal()).equals("free")){
             return result;
@@ -75,7 +73,7 @@ public class CheckWinner {
         return "free";
     }
 
-    public String checckMainDiagonal() {
+    public String checkMainDiagonal() {
         for (int i = 2-sideSize; i <= sideSize-2; i++) {
             cell = null;
             sum =0;
